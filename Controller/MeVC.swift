@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import  Firebase
 class MeVC: UIViewController {
 
     @IBOutlet weak var profileImage: UIImageView!
@@ -26,6 +26,21 @@ class MeVC: UIViewController {
     
 
     @IBAction func signOutBtnPressed(_ sender: Any) {
+        let alert = UIAlertController(title: "Log out ?", message: "Are u sure u wont to logout ?", preferredStyle: .actionSheet)
+        let action = UIAlertAction(title: "Logout?", style: .destructive) { (myaction) in
+            do{
+                try Auth.auth().signOut()
+                let authVC = self.storyboard?.instantiateViewController(withIdentifier: "AuthVC") as? AuthVC
+                self.present(authVC!, animated: true, completion: nil)
+            }catch{
+                print("Cant logout \(error.localizedDescription)")
+            }
+        }
+        let actionNo = UIAlertAction(title: "NO", style: .default, handler: nil)
+        alert.addAction(actionNo)
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+        
     }
     
 }

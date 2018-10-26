@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import  Firebase
 class AuthVC: UIViewController {
 
     override func viewDidLoad() {
@@ -16,6 +16,12 @@ class AuthVC: UIViewController {
        
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if Auth.auth().currentUser != nil {
+            dismiss(animated: true, completion: nil)
+        }
+    }
 
     @IBAction func facebookSingInPressed(_ sender: UIButton) {
     }
