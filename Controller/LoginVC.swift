@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class LoginVC: UIViewController, UITextFieldDelegate {
 
@@ -15,45 +16,42 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var passwordField: InsertextFild!
     
+    @IBOutlet weak var logBtn: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         
         emailField.delegate = self
         passwordField.delegate = self
+        
+        logBtn.layer.cornerRadius = 15
+        logBtn.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        logBtn.layer.shadowColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        logBtn.layer.borderWidth = 3
+        
     }
     
     @IBAction func signInPressed(_ sender: UIButton) {
-        if emailField.text != nil && passwordField.text != nil {
-            AuthService.instance.loginUser(email: emailField.text!, password: passwordField.text!) { (success, error) in
-                if success  {
-                    self.dismiss(animated: true, completion: nil)
-                    print("Successfuly registered user")
-                    
+        
+        if emailField.text != nil && passwordField.text != nil  {
+            AuthService.instance.registerUser(email: self.emailField.text!, password: self.passwordField.text!) { (success, error) in
+                if error != nil  {
+                    print(error?.localizedDescription as Any)
                 }else {
-                    print(String(describing: error?.localizedDescription))
-                    let alert = UIAlertController(title: "Enter Corect settings", message: "and try again", preferredStyle: .alert)
-                    let action = UIAlertAction(title: "OK", style: .cancel, handler: { (action) in
-                        self.emailField.text = ""
-                        self.passwordField.text  = ""
+                    AuthService.instance.loginUser(email: self.emailField.text!, password: self.passwordField.text!, loginCreationComplete: { (success, error) in
+                        self.dismiss(animated: true, completion: nil)
+                        print("Successfuly registered user")
                     })
-                    alert.addAction(action)
-                    self.present(alert, animated: true, completion: nil)
                 }
-                
-                AuthService.instance.registerUser(email: self.emailField.text!, password: self.passwordField.text!, userCreationComplete: { (success, error) in
-                    if success {
-                        AuthService.instance.loginUser(email: self.emailField.text!, password: self.passwordField.text!, loginCreationComplete: { (success, nil) in
-                            self.dismiss(animated: true, completion: nil)
-                        })
-                    }else {
-                        print(String(describing: error?.localizedDescription))
-                    }
-                })
             }
+
         }
     }
     
     @IBAction func closePressed(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
+        
+        
+        
 }
+

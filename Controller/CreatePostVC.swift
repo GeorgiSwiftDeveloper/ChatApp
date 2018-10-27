@@ -23,8 +23,21 @@ class CreatePostVC: UIViewController {
         super.viewDidLoad()
         
         myTextView.delegate = self
+        sendBtn.bindToKeyboard()
+        
+        
+        sendBtn.layer.cornerRadius = 15
+        sendBtn.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        sendBtn.layer.shadowColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        sendBtn.layer.borderWidth = 3
+    
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        emailLbl.text = Auth.auth().currentUser?.email
+    }
+
     @IBAction func sendBtnPressed(_ sender: UIButton) {
         if myTextView.text != "" && myTextView.text != "Say something here..." {
             self.sendBtn.isEnabled = false
@@ -59,4 +72,6 @@ extension CreatePostVC: UITextViewDelegate {
         myTextView.text = ""
         
     }
+    
+
 }
