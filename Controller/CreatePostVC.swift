@@ -37,7 +37,7 @@ class CreatePostVC: UIViewController {
         super.viewWillAppear(animated)
         emailLbl.text = Auth.auth().currentUser?.email
     }
-
+    //MARK: Send information to Firebase and save
     @IBAction func sendBtnPressed(_ sender: UIButton) {
         if myTextView.text != "" && myTextView.text != "Say something here..." {
             self.sendBtn.isEnabled = false
@@ -55,10 +55,11 @@ class CreatePostVC: UIViewController {
                 }
                 
             }
-            
-            
+
         }
     }
+    
+    //MARK: Dissmiss ViewController
     
     @IBAction func goBackBtnPressed(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)

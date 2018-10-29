@@ -30,8 +30,8 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         
     }
     
+    //MARK: Create account to the Firebase
     @IBAction func signInPressed(_ sender: UIButton) {
-        
         if emailField.text != nil && passwordField.text != nil  {
             AuthService.instance.registerUser(email: self.emailField.text!, password: self.passwordField.text!) { (success, error) in
                 if error != nil  {

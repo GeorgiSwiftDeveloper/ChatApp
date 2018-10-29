@@ -34,6 +34,7 @@ class CreateGroupVC: UIViewController, UITextFieldDelegate {
         myTableView.dataSource = self
         emailTextFild.delegate = self
         
+        //MARK: TextFild Target get function
         emailTextFild.addTarget(self, action: #selector(textFieldDidiChange), for: .editingChanged)
     }
     
@@ -43,7 +44,7 @@ class CreateGroupVC: UIViewController, UITextFieldDelegate {
         
     }
     
-    
+    //MARK: TextFild show Firebase emails
     @objc func textFieldDidiChange() {
         if emailTextFild.text == "" {
             emailArray = []
@@ -56,7 +57,7 @@ class CreateGroupVC: UIViewController, UITextFieldDelegate {
         }
     }
 
-  
+    //MARK: Create Group informaiton on Firebase Cloud and dissmiss controller
     @IBAction func doneBtnPressed(_ sender: UIButton) {
         if titleTextFild.text != "" && descriptionTextFild.text != "" {
             getIds(forUsername: choosenArray) { (idsArray) in
@@ -78,7 +79,7 @@ class CreateGroupVC: UIViewController, UITextFieldDelegate {
     }
     
     
-    
+    //MARK: get all email from Firebase 
     func getEmail(forSerchQuery query: String, handler: @escaping (_ emailArray: [String]) -> ()) {
         var emailArray = [String]()
         Database.database().reference(withPath: "Message").observe(.value) { (userSnapshot) in
@@ -95,7 +96,7 @@ class CreateGroupVC: UIViewController, UITextFieldDelegate {
         
         
     }
-    
+    //MARK: Get Firebase Sender Ids and pass it to the function
     func getIds(forUsername username: [String], handler: @escaping (_ uidArray: [String]) -> ()) {
         Database.database().reference(withPath: "Message").observeSingleEvent(of: .value) { (userSnapshot) in
             var idArray = [String]()
@@ -111,20 +112,18 @@ class CreateGroupVC: UIViewController, UITextFieldDelegate {
         }
     }
 
-
+    //MARK: Create a new reference on Firebase Group
     func createGroup(withTitle title: String, andDescriptionn description: String, forUserId uId: [String], handler: @escaping (_ groupCreated: Bool) ->()) {
         Database.database().reference(withPath: "Group").childByAutoId().updateChildValues(["title": title, "description": description, "members": uId])
         handler(true)
     }
+    
 }
 
 extension CreateGroupVC: UITableViewDelegate, UITableViewDataSource {
     
     
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        return emailArray.count
-//        
-//    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return emailArray.count
     }

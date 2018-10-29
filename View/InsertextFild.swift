@@ -12,6 +12,7 @@ class InsertextFild: UITextField {
 
     private var textRectOfSet: CGFloat = 20
     
+    
 
     override func awakeFromNib() {
         setupView()

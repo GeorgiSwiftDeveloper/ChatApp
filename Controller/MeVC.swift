@@ -20,7 +20,7 @@ class MeVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
      
     }
     
@@ -28,7 +28,9 @@ class MeVC: UIViewController {
         super.viewWillAppear(animated)
         emailLabel.text = Auth.auth().currentUser?.email
     }
-
+    
+    
+    //MARK: SignOut function from Chat App
     @IBAction func signOutBtnPressed(_ sender: Any) {
         let alert = UIAlertController(title: "Log out ?", message: "Are u sure u wont to logout ?", preferredStyle: .actionSheet)
         let action = UIAlertAction(title: "Logout?", style: .destructive) { (myaction) in

@@ -21,7 +21,6 @@ class ChatVC: UIViewController {
         myTableView.rowHeight = UITableView.automaticDimension
         myTableView.delegate = self
         myTableView.dataSource = self
-        messageArray.reversed()
         myTableView.reloadData()
        
         retriveMessages()
@@ -30,7 +29,7 @@ class ChatVC: UIViewController {
        
     }
     
-    
+    //MARK: Show Firebase information on the ChatVC
     func retriveMessages() {
         let messageDB = Database.database().reference().child("Message")
         messageDB.observe(.childAdded) { (snapshot) in
