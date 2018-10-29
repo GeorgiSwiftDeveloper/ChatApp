@@ -19,6 +19,7 @@ class UserCell: UITableViewCell {
     
     @IBOutlet weak var checkLbl: UIImageView!
     
+    var showing =  false
     
     func configureCell(porofileImage image: UIImage, email: String, isSelected: Bool) {
         self.imageUser.image = image
@@ -32,8 +33,17 @@ class UserCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+        
+        if selected {
+            if showing == false {
+                checkLbl.isHidden = false
+                showing = true
+            }else {
+                checkLbl.isHidden = true
+                showing = false
+            }
+        }
+       
     }
 
 }
